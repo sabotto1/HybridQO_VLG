@@ -1,0 +1,1 @@
+SELECT Top 100 * FROM comments as c, posthistory as ph WHERE c.UserId = ph.UserId AND c.Score=0 AND ph.PostHistoryTypeId=1

@@ -1,0 +1,1 @@
+SELECT Top 100 * FROM posthistory as ph, votes as v, users as u, badges as b WHERE u.Id = b.UserId AND u.Id = ph.UserId AND u.Id = v.UserId AND u.Views>=0

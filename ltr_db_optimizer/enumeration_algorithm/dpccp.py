@@ -161,7 +161,7 @@ class DPccp:
 
 
 
-    def reduce_original(self, plans, last = False):
+    def reduce(self, plans, last = False):
         # hier noch model einfügen
         if self.model is None:
             print('random sample subplans in plan enumeration!')
@@ -188,63 +188,13 @@ class DPccp:
 
             # get top_k plans
             # k = self.top_k if not last else 1
-
             k = 20 if not last else 1
-
 
             # print('final predictions: ', predictions.shape, predictions[:20])
             topk_predictions = torch.topk(predictions, k, dim = -1)
             # print('topk predictions: ', topk_predictions)
             selected_plans = [plans[i] for i in topk_predictions.indices[0]]
             # print('selected_plans: ', selected_plans)
-            return selected_plans
-
-    def reduce(self, plans, last = False):
-        # hier noch model einfügen
-        if self.model is None:
-            print('random sample subplans in plan enumeration!')
-            random_selected_plans = random.sample(plans, self.top_k)
-
-            return random_selected_plans
-        else:
-            # should be the same sql for all
-            query_enc, feat_plans = self.prepare_plans(plans, last)
-            # assert len(prepared_plans) == 2
-            # if len(prepared_plans[1]) == 1:
-            #     return prepared_plans[1]
-            # print('query encocccc111:', query_enc.dtype)
-
-            # query_enc = torch.tensor(query_enc, dtype=torch.float).to(self.device)
-            # print('query encocccc222:', query_enc.dtype)
-
-            infer_st = datetime.now()
-            predictions = self.model.online_predict_all(query_enc, feat_plans).t()
-            infer_end = datetime.now()
-            enum_time_inference = (infer_end - infer_st).total_seconds() * 1000
-            self.total_inference_time += enum_time_inference
-            self.total_inference_time = round(self.total_inference_time, 2)
-            # print('enum_time_inference', enum_time_inference)
-
-            # print("predictions haha", predictions.shape, predictions)
-            self.inference_time_detail.append((len(predictions[0]), enum_time_inference))
-
-            # bound = 50
-            bound = min(len(predictions[0]), self.top_k)
-
-            # bound = min(len(predictions[0]), bound)
-
-            # print('bound', bound, len(predictions[0]))
-            topk_predictions = torch.topk(predictions[0], bound, dim=-1)
-            # print('topk predictions: ', topk_predictions)
-            p_sort_diff = torch.diff(topk_predictions.values)
-            till_index = p_sort_diff.argmin()
-            # print('till_index', till_index)
-
-            selected_indices = topk_predictions.indices[:till_index+1]
-            # print('selected_indices', selected_indices)
-
-            selected_plans = [plans[i] for i in selected_indices.tolist()]
-
             return selected_plans
 
 

@@ -1,0 +1,6 @@
+results/
+logs/*
+!logs/.gitkeep
+ltr_db_optimizer/model/saved_models/
+__pycache__/
+*.pyc

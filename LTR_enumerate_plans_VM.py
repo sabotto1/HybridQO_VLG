@@ -124,16 +124,16 @@ if __name__ == "__main__":
 
 
     ### trained ranking model to rank plans in enumeration process
-    # model = f"/home/xliq/Documents/HybridQO/ltr_db_optimizer/model/saved_models/{targeted_model_name}/best_avg_ndcg.pth"
+    # model = f"ltr_db_optimizer/model/saved_models/{targeted_model_name}/best_avg_ndcg.pth"
     print('targeted_model_name:', targeted_model_name)
     if targeted_model_name != None and targeted_model_name != "None":
         model_archi_name = targeted_model_name.split("MODEL_")[1].split("_")[0]
 
         print('used Model Architecture: ', model_archi_name)
         if model_archi_name  == "HM":
-            model = f"/home/xliq/Documents/HybridQO/ltr_db_optimizer/model/saved_models/{targeted_model_name}/avg_k.pth"
+            model = f"ltr_db_optimizer/model/saved_models/{targeted_model_name}/avg_k.pth"
         else:
-            model = f"/home/xliq/Documents/HybridQO/ltr_db_optimizer/model/saved_models/{targeted_model_name}/min_avg_valid_loss.pth"
+            model = f"ltr_db_optimizer/model/saved_models/{targeted_model_name}/min_avg_valid_loss.pth"
 
 
     ### test queries info.
@@ -141,11 +141,11 @@ if __name__ == "__main__":
     if targeted_test_query in ["tpch-d"]:
 
         query_folder_name = "tpch_test"  # tpch_query
-        query_path = f'/home/xliq/Documents/HybridQO/Data/{query_folder_name}/'
+        query_path = f'Data/{query_folder_name}/'
 
     elif targeted_test_query == "stats-r":
         query_folder_name = "stats_test"
-        query_path = f"/home/xliq/Documents/HybridQO/Data/{query_folder_name}/"
+        query_path = f"Data/{query_folder_name}/"
         query_file_names = os.listdir(query_path)
         testquery = []
         for stats_query in query_file_names:
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     elif targeted_test_query == "imdb-r":
         query_folder_name = "imdb_test"
-        query_path = f"/home/xliq/Documents/HybridQO/Data/{query_folder_name}/"
+        query_path = f"Data/{query_folder_name}/"
         query_file_names = os.listdir(query_path)
         testquery = []
         for imdb_query in query_file_names:
@@ -166,7 +166,7 @@ if __name__ == "__main__":
 
     elif targeted_test_query == "job-c":
         query_folder_name = "job-complex"
-        query_path = f"/home/xliq/Documents/HybridQO/Data/{query_folder_name}/"
+        query_path = f"Data/{query_folder_name}/"
         query_file_names = os.listdir(query_path)
         testquery = []
         for imdb_query in query_file_names:
@@ -226,7 +226,7 @@ if __name__ == "__main__":
                 all_inference_times.append(['DB', job, enum_time, 'ms'])
                 continue
 
-            path_out = f"/home/xliq/Documents/HybridQO/results/enumerated_plans_{targeted_enum_method}_{targeted_model_name}/{query_folder_name}/iter{iter}/{job}/"
+            path_out = f"results/enumerated_plans_{targeted_enum_method}_{targeted_model_name}/{query_folder_name}/iter{iter}/{job}/"
 
             if targeted_test_query in ["job-o", "stats-o"] and os.path.exists(path_out):
                 print(f'{job} in {targeted_test_query} alreay enumerated and thus ignored!')
@@ -251,7 +251,7 @@ if __name__ == "__main__":
 
             print('the number of returned best plans', len(best_plans))
 
-            # path_out = f"/home/xliq/Documents/HybridQO/results/enumerated_plans_{targeted_enum_method}_{targeted_model_name}/{query_folder_name}/iter{iter}/{job}/"
+            # path_out = f"results/enumerated_plans_{targeted_enum_method}_{targeted_model_name}/{query_folder_name}/iter{iter}/{job}/"
 
             # os.mkdir(path_out)
             os.system(f"mkdir -p {path_out}")
@@ -323,10 +323,10 @@ if __name__ == "__main__":
             methods_runtime_list = []
 
             if targeted_enum_method == "DB":
-                plan_path = f"/home/xliq/Documents/HybridQO/results/enumerated_plans_{targeted_enum_method}/{query_folder_name}/iter{iter}/{job}/"
+                plan_path = f"results/enumerated_plans_{targeted_enum_method}/{query_folder_name}/iter{iter}/{job}/"
             else:
                 plan_folder_postfix = "_".join([targeted_enum_method, targeted_model_name])
-                plan_path = f"/home/xliq/Documents/HybridQO/results/enumerated_plans_{plan_folder_postfix}/{query_folder_name}/iter{iter}/{job}/"
+                plan_path = f"results/enumerated_plans_{plan_folder_postfix}/{query_folder_name}/iter{iter}/{job}/"
 
 
             with open(plan_path + str(0) + ".txt", "r") as f:
@@ -402,10 +402,10 @@ if __name__ == "__main__":
             all_runtime_df = pd.concat(all_runtime_list, axis=0)
 
             if targeted_enum_method == "DB":
-                all_df_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_iter_{iter}_runtime.csv"
+                all_df_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_iter_{iter}_runtime.csv"
             else:
-                all_df_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_iter_{iter}_runtime.csv"
-                # all_df_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_runtime.csv"
+                all_df_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_iter_{iter}_runtime.csv"
+                # all_df_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_runtime.csv"
 
             all_runtime_df.to_csv(all_df_path, index=True, header=True)
 
@@ -422,10 +422,10 @@ if __name__ == "__main__":
         runtime_desc_df = runtime_desc_df.round(1)
 
         if targeted_enum_method == "DB":
-            runtime_desc_file_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_iter_{iter}_runtime_descr.csv"
+            runtime_desc_file_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_iter_{iter}_runtime_descr.csv"
         else:
-            runtime_desc_file_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_iter_{iter}_runtime_descr.csv"
-            # runtime_desc_file_path = f"/home/xliq/Documents/HybridQO/results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_runtime_descr.csv"
+            runtime_desc_file_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_iter_{iter}_runtime_descr.csv"
+            # runtime_desc_file_path = f"results/dataset_{targeted_database}_workload_{targeted_test_query}_enum_{targeted_enum_method}_rank_{targeted_model_name}_runtime_descr.csv"
 
         runtime_desc_df.to_csv(runtime_desc_file_path, index=True, header=True)
 

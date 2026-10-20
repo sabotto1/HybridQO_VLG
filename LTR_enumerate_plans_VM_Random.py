@@ -79,7 +79,7 @@ def set_DBMS(db):
     SERVER = 'localhost,1433'
     DATABASE = db
     USERNAME = 'sa'
-    PASSWORD = 'YOUR_PASSWORD'
+    PASSWORD = 'LX##1992'
 
     conn = pyodbc.connect(driver='{ODBC Driver 18 for SQL Server}',
                           server=SERVER,

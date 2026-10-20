@@ -218,7 +218,7 @@ class DPccp:
             # DATABASE = 'imdb'
             DATABASE = self.database
             USERNAME = 'sa'
-            PASSWORD = 'YOUR_PASSWORD'
+            PASSWORD = 'LX##1992'
             conn_timeout = 10
             conn = pyodbc.connect(driver='{ODBC Driver 18 for SQL Server}',
                                   server=SERVER,

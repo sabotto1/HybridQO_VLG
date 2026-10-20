@@ -247,7 +247,7 @@ class FeatureExtractorGraph:
 
 
 def get_sql_parse_info(job):
-    with open(f"./LTR4QO/Data/output_jobs/{job}.txt", "r") as f:
+    with open(f"./Data/output_jobs/{job}.txt", "r") as f:
         sql_full = f.read()
     sql_full = sql_full.replace("tcph", "tpch")
     ### parse query

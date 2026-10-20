@@ -111,7 +111,7 @@ def enumerate_by_SQL_Server(job, sql_full, folder_name, cursor):
 
     # print('rows[0]', rows[0])
     # print('rows[0][0]', rows[0][0])
-    path_out = f"./LTR4QO/results/enumerated_plans_DB/{folder_name}/iter{iter}/{job}/"
+    path_out = f"./results/enumerated_plans_DB/{folder_name}/iter{iter}/{job}/"
 
     os.system(f"mkdir -p {path_out}")
 
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     ### training queries info.
 
     if targeted_test_query == 'tpch_train':
-        query_path = f"./LTR4QO/Data/output_jobs/"
+        query_path = f"./Data/output_jobs/"
 
         train_query_files = os.listdir(query_path)
         testquery = []
@@ -223,7 +223,7 @@ if __name__ == "__main__":
         testquery = testquery[:nr_testquery]
     elif targeted_test_query == 'stats_train':
         query_folder_name = "stats_train" # stats1000reshuff
-        query_path = f"./LTR4QO/Data/{query_folder_name}/"
+        query_path = f"./Data/{query_folder_name}/"
         query_file_names = os.listdir(query_path)
         testquery = []
         for stats_query in query_file_names:
@@ -233,7 +233,7 @@ if __name__ == "__main__":
 
     elif targeted_test_query == 'imdb_train':
         query_folder_name = "imdb_train"  # imdb39reshuff
-        query_path = f"./LTR4QO/Data/{query_folder_name}/"
+        query_path = f"./Data/{query_folder_name}/"
         query_file_names = os.listdir(query_path)
         testquery = []
         for stats_query in query_file_names:
@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
     k = args.topk
 
-    root_save_path = f"./LTR4QO/Data/subplans_{nr_of_workloads}"
+    root_save_path = f"./Data/subplans_{nr_of_workloads}"
     if os.path.exists(root_save_path):
         os.system(f"rm -rf {root_save_path}")
         print(f'{root_save_path} already exists and thus removed first!')
@@ -266,13 +266,13 @@ if __name__ == "__main__":
                 print('enumerate job: ', job_index, job)
 
 
-                if targeted_test_query in ['job-o', 'imdb-t2', 'job-l', 'imdb-bs1', 'imdb-los1', 'jobc-train']:
+                if targeted_test_query in ['job-o', 'imdb-t2', 'job-l', 'imdb-bs1', 'imdb-los1', 'jobc-train', 'imdb_train']:
                     with open(f"{query_path}/{job}.sql", "r") as f:
                         sql_full = f.read()
 
                     sql_dict, alias_dict = SQLParser.from_sql(sql_full,temp_table_info=TableInformation)
 
-                elif targeted_test_query in ['train', 'stats', 'imdb-t']:
+                elif targeted_test_query in ['train', 'stats', 'imdb-t', 'stats_train']:
                     with open(f"{query_path}/{job}.txt", "r") as f:
                         sql_full = f.read()
                     if targeted_test_query == 'train':

@@ -75,7 +75,7 @@ training_workload = args.train_wk
 postfix = args.postfix
 
 
-directory = "./LTR4QO"
+directory = "."
 
 root_path = f"{directory}/Data"
 

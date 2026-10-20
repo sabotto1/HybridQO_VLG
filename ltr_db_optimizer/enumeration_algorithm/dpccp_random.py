@@ -230,7 +230,7 @@ class DPccp:
 
             # saving path
 
-            save_path = f"LTR4QO/Data/subplans_{self.nr_workload}/{self.job_name}/{name}/"
+            save_path = f"Data/subplans_{self.nr_workload}/{self.job_name}/{name}/"
 
             if os.path.exists(save_path):
                 os.system(f"rm -rf {save_path}")

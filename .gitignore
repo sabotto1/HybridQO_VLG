@@ -5,3 +5,4 @@ ltr_db_optimizer/model/saved_models/
 __pycache__/
 *.pyc
 Data/subplans_*/
+Data/training_data/

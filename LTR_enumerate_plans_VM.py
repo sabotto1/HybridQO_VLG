@@ -247,7 +247,9 @@ if __name__ == "__main__":
                                         alias_dict=alias_dict, train_wk=train_wk, tree_high=tree_high, tree_low=tree_low)
 
 
+            enum_t0 = datetime.now()
             best_plans = enum.find_best_plan()
+            print('LTR planning time (ms):', job, round((datetime.now() - enum_t0).total_seconds()*1000, 2))
 
             print('the number of returned best plans', len(best_plans))
 

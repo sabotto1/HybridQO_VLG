@@ -39,7 +39,7 @@ class DPccp:
                 self.model = eval(model_archi_name)(10, 6)
                 print(f'load model:{model_archi_name}!!!')
             # self.model.load_state_dict(torch.load(model), strict=False)
-            self.model.load_state_dict(torch.load(model))
+            self.model.load_state_dict(torch.load(model, map_location=self.device))
 
         else:
             self.model = None

@@ -206,6 +206,9 @@ if __name__ == "__main__":
             # if targeted_test_query == "job-c" and job not in ["11"]:
             #     continue
 
+            if job in os.environ.get('SKIP_JOBS', '').split(','):
+                print('skipped job (SKIP_JOBS): ', job)
+                continue
             print('enumerate job: ', job_index, job)
 
 
@@ -228,7 +231,7 @@ if __name__ == "__main__":
 
             path_out = f"results/enumerated_plans_{targeted_enum_method}_{targeted_model_name}/{query_folder_name}/iter{iter}/{job}/"
 
-            if targeted_test_query in ["job-o", "stats-o"] and os.path.exists(path_out):
+            if os.path.exists(path_out + "0.txt"):
                 print(f'{job} in {targeted_test_query} alreay enumerated and thus ignored!')
                 continue
 
@@ -331,6 +334,9 @@ if __name__ == "__main__":
                 plan_path = f"results/enumerated_plans_{plan_folder_postfix}/{query_folder_name}/iter{iter}/{job}/"
 
 
+            if not os.path.exists(plan_path + str(0) + ".txt"):
+                print('no plan, job skipped in runtime: ', job)
+                continue
             with open(plan_path + str(0) + ".txt", "r") as f:
                 plan_sql = f.read()
             try:
